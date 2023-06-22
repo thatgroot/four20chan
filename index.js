@@ -149,8 +149,12 @@ function generateUniqueTicket() {
   return Math.random().toString(36).substring(2, 10);
 }
 
-// Start the main bot
-bot.startPolling();
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+  // Start the main bot
+  bot.startPolling();
 
-// Start the ticket bot
-ticketBot.startPolling();
+  // Start the ticket bot
+  ticketBot.startPolling();
+  console.log(`Server running on port ${port}`);
+});
