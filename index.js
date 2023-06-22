@@ -1,5 +1,5 @@
 require("dotenv").config();
-const express = require('express');
+const express = require("express");
 const TelegramBot = require("node-telegram-bot-api");
 const Moralis = require("moralis").default;
 
@@ -49,7 +49,7 @@ async function sendtoken(chatId) {
       `🍀 ERC-20 Token Freshly launched\n\n` +
         `📄 Contract: ${token.address}\n` +
         `💵 ${token.eth} ETH ($${token.usd}) \n` +
-        `🪙 ${token.supply} 420CHAN\n` +
+        `🪙 ${token.supply} 420chan\n` +
         `🔹 https://bit.ly/420ChanDexTools\n\n` +
         `🔼 Low Market Cap\n` +
         `🐦 TW: @420chan_token\n` +
@@ -61,37 +61,7 @@ async function sendtoken(chatId) {
 // Set Interval to send token details every hour
 setInterval(() => sendtoken("-1001719064596"), 60 * 60 * 1000);
 
-bot.onText(/\/help/, (msg) => {
-  const chatId = msg.chat.id;
-  const helpText = [
-    "/rules - Get information about the group rules",
-    "/help - Get the list of commands",
-  ].join("\n");
-
-  bot.sendMessage(chatId, "Available commands:\n\n" + helpText);
-});
-
-bot.onText(/\/rules/, (msg) => {
-  const chatId = msg.chat.id;
-  const rules =
-    "🪴 Welcome To The Official 420Chan Channel\n" +
-    "📕 Follow The Rules Or Get Banned\n" +
-    "🚫 Spam\n" +
-    "🚫 Scam\n" +
-    "🚫 Disrespect";
-
-  bot.sendMessage(chatId, rules);
-});
-
-// Removed bot.once("message") event as it was only used once at the beginning and not used in any other bot.onText events.
-
-const ticketBot = new TelegramBot(TICKET_TOKEN, {
-  polling: true,
-});
-
-const tickets = new Map();
-
-ticketBot.onText(/\/ticket/, (msg) => {
+function generateTicket(msg) {
   const chatId = msg.chat.id;
   const username = msg.from.username || msg.from.first_name;
 
@@ -112,7 +82,40 @@ ticketBot.onText(/\/ticket/, (msg) => {
       ticketBot.sendMessage(chatId, "Time expired! Please try again.");
     }
   }, 45000);
+}
+bot.on("new_chat_members", generateTicket);
+
+bot.onText(/\/help/, (msg) => {
+  const chatId = msg.chat.id;
+  const helpText = [
+    "/rules - Get information about the group rules",
+    "/help - Get the list of commands",
+  ].join("\n");
+
+  bot.sendMessage(chatId, "Available commands:\n\n" + helpText);
 });
+
+bot.onText(/\/rules/, (msg) => {
+  const chatId = msg.chat.id;
+  const rules =
+    "🪴 Welcome To The Official 420chan Channel\n" +
+    "📕 Follow The Rules Or Get Banned\n" +
+    "🚫 Spam\n" +
+    "🚫 Scam\n" +
+    "🚫 Disrespect";
+
+  bot.sendMessage(chatId, rules);
+});
+
+// Removed bot.once("message") event as it was only used once at the beginning and not used in any other bot.onText events.
+
+const ticketBot = new TelegramBot(TICKET_TOKEN, {
+  polling: true,
+});
+
+const tickets = new Map();
+
+ticketBot.onText(/\/ticket/, generateTicket);
 
 ticketBot.on("callback_query", async (query) => {
   if (query.data === "generate_ticket") {
@@ -131,13 +134,13 @@ ticketBot.on("callback_query", async (query) => {
 
       const msg = await ticketBot.sendMessage(
         chatId,
-        "Please Join 420CHAN Group here: https://t.me/+-WPFpGOCbihhMmM0"
+        "Please Join 420chan Group here: https://t.me/+-WPFpGOCbihhMmM0"
       );
 
       const mainGroupId = "-1001719064596"; // Replace with the chat ID of the main group
       await ticketBot.sendMessage(
         mainGroupId,
-        `Welcome To Pickly Telegram /help /rules`
+        `Welcome To 420chan Telegram /help /rules`
       );
 
       await ticketBot.deleteMessage(chatId, messageId);
