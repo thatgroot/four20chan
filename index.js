@@ -66,10 +66,7 @@ bot.onText(/\/help/, (msg) => {
     "/help - Get the list of commands",
   ].join("\n");
 
-  bot.sendMessage(
-    chatId,
-    "Available commands:\n\n" + helpText + "\n\nRules: <Your rules here>"
-  );
+  bot.sendMessage(chatId, "Available commands:\n\n" + helpText);
 });
 
 bot.onText(/\/rules/, (msg) => {
@@ -85,7 +82,6 @@ bot.onText(/\/rules/, (msg) => {
 });
 
 // Removed bot.once("message") event as it was only used once at the beginning and not used in any other bot.onText events.
-
 
 const ticketBot = new TelegramBot(TICKET_TOKEN, {
   polling: true,
