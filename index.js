@@ -1,3 +1,5 @@
+require("dotenv").config();
+const express = require('express');
 const TelegramBot = require("node-telegram-bot-api");
 const Moralis = require("moralis").default;
 
@@ -148,6 +150,7 @@ ticketBot.on("callback_query", async (query) => {
 function generateUniqueTicket() {
   return Math.random().toString(36).substring(2, 10);
 }
+const app = express();
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
