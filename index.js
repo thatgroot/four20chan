@@ -134,7 +134,7 @@ ticketBot.on("callback_query", async (query) => {
 
       const msg = await ticketBot.sendMessage(
         chatId,
-        "Please Join 420chan official group here: https://t.me/official_420_group"
+        "Please Join 420chan official group here: https://t.me/official_420chan_group"
       );
 
       const mainGroupId = "-1001719064596"; // Replace with the chat ID of the main group
