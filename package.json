@@ -6,9 +6,7 @@
   "scripts": {
     "start":"nodemon index.js"
   },
-  "devDependencies": {
-    "vite": "^4.3.9",
-    "axios": "^1.4.0",
+  "dependencies": {
     "moralis": "^2.22.2",
     "node-telegram-bot-api": "^0.61.0",
     "nodemon": "^2.0.22"
