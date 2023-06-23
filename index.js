@@ -41,7 +41,7 @@ async function gettoken() {
       address: data.tokenAddress,
       eth: Number(ethPrice).toFixed(18),
       usd: Number(data.usdPriceFormatted).toFixed(12),
-      supply: "420000000000000000000000000000000 ",
+      supply: "420 Trillion ",
       symbol: data.tokenSymbol,
     };
   } catch (e) {
