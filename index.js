@@ -14,6 +14,16 @@ Moralis.start({ apiKey: API_KEY }).then(console.log);
 // Create a new instance of the TelegramBot with your bot token
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 
+bot.on("new_chat_members", (msg) => {
+  const chatId = msg.chat.id;
+  const helpText = [
+    "/rules - Get information about the group rules",
+    "/help - Get the list of commands",
+  ].join("\n");
+
+  bot.sendMessage(chatId, "Available commands:\n\n" + helpText);
+});
+
 // Fetch token data
 async function gettoken() {
   try {
@@ -117,7 +127,6 @@ const tickets = new Map();
 ticketBot.onText(/\/ticket/, generateTicket);
 
 ticketBot.on("new_chat_members", generateTicket);
-
 
 ticketBot.on("callback_query", async (query) => {
   if (query.data === "generate_ticket") {
