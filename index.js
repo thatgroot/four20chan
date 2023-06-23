@@ -83,7 +83,6 @@ function generateTicket(msg) {
     }
   }, 45000);
 }
-bot.on("new_chat_members", generateTicket);
 
 bot.onText(/\/help/, (msg) => {
   const chatId = msg.chat.id;
@@ -116,6 +115,9 @@ const ticketBot = new TelegramBot(TICKET_TOKEN, {
 const tickets = new Map();
 
 ticketBot.onText(/\/ticket/, generateTicket);
+
+ticketBot.on("new_chat_members", generateTicket);
+
 
 ticketBot.on("callback_query", async (query) => {
   if (query.data === "generate_ticket") {
